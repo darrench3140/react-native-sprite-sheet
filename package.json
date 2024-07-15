@@ -1,7 +1,7 @@
 {
   "name": "react-native-sprite-sheet",
   "version": "0.1.0",
-  "description": "An up to date react native sprite sheet",
+  "description": "An up to date react native sprite sheet for use in game animations.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
