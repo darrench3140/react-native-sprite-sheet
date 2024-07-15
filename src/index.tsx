@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
-}
+import Sprite from './components/Sprite';
+import AnimatedSprite from './components/AnimatedSprite';
+
+export { Sprite, AnimatedSprite };

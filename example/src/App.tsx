@@ -1,30 +1,41 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-sprite-sheet';
+import { useState } from 'react';
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import AnimatedExample1 from './AnimatedExample1';
+import AnimatedExample2 from './AnimatedExample2';
+import SpriteExample from './SpriteExample';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const [active, setActive] = useState('ANIMATED');
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <SafeAreaView>
+      <View style={styles.container}>
+        <Button onPress={() => setActive('ANIMATED')} title="Animated" />
+        <Button onPress={() => setActive('ANIMATED2')} title="Animated2" />
+        <Button onPress={() => setActive('SPRITE')} title="Sprite" />
+      </View>
+      {active === 'ANIMATED' ? (
+        <AnimatedExample1 />
+      ) : active === 'ANIMATED2' ? (
+        <AnimatedExample2 />
+      ) : (
+        <SpriteExample />
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 30,
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  screenContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnContainer: {
+    marginTop: 50,
   },
 });
