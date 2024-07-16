@@ -1,4 +1,4 @@
-import Sprite from './components/Sprite';
-import AnimatedSprite from './components/AnimatedSprite';
+import Sprite from './components/Sprite'
+import AnimatedSprite from './components/AnimatedSprite'
 
-export { Sprite, AnimatedSprite };
+export { Sprite, AnimatedSprite }

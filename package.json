@@ -133,9 +133,13 @@
         {
           "quoteProps": "consistent",
           "singleQuote": true,
+          "bracketSameLine": true,
+          "bracketSpacing": true,
+          "semi": false,
           "tabWidth": 2,
           "trailingComma": "es5",
-          "useTabs": false
+          "useTabs": false,
+          "printWidth": 150
         }
       ]
     }
@@ -147,9 +151,13 @@
   "prettier": {
     "quoteProps": "consistent",
     "singleQuote": true,
+    "bracketSameLine": true,
+    "bracketSpacing": true,
+    "semi": false,
     "tabWidth": 2,
     "trailingComma": "es5",
-    "useTabs": false
+    "useTabs": false,
+    "printWidth": 150
   },
   "react-native-builder-bob": {
     "source": "src",

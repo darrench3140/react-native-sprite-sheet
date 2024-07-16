@@ -1,17 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { useRef, useState } from 'react';
-import { Sprite } from 'react-native-sprite-sheet';
-import type { SpriteType } from '../../src/types/SpriteTypes';
-import Slider from '@react-native-community/slider';
+import { StyleSheet, Text, View } from 'react-native'
+import { useRef, useState } from 'react'
+import { Sprite } from 'react-native-sprite-sheet'
+import type { SpriteType } from '../../src/types/SpriteTypes'
+import Slider from '@react-native-community/slider'
 
 const SpriteExample = () => {
-  const ref = useRef<SpriteType>(null);
-  const [currentFrame, setCurrentFrame] = useState(9);
+  const ref = useRef<SpriteType>(null)
+  const [currentFrame, setCurrentFrame] = useState(9)
 
   const setFrame = (value: number) => {
-    setCurrentFrame(value);
-    ref.current?.setCurrentFrameIndex(value);
-  };
+    setCurrentFrame(value)
+    ref.current?.setCurrentFrameIndex(value)
+  }
 
   return (
     <View style={styles.screenContainer}>
@@ -40,10 +40,10 @@ const SpriteExample = () => {
         <Text style={styles.labelText}> {currentFrame}</Text>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default SpriteExample;
+export default SpriteExample
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginRight: 12,
   },
-});
+})

@@ -1,14 +1,14 @@
-import { Button, StyleSheet, Switch, Text, View } from 'react-native';
-import { useRef, useState } from 'react';
-import { AnimatedSprite } from 'react-native-sprite-sheet';
-import type { AnimatedSpriteType } from '../../src/types/SpriteTypes';
-import SpritSheetNinjaJSON from '../assets/spritesheet/ninja/spritesheet.json';
-import Slider from '@react-native-community/slider';
+import { Button, StyleSheet, Switch, Text, View } from 'react-native'
+import { useRef, useState } from 'react'
+import { AnimatedSprite } from 'react-native-sprite-sheet'
+import type { AnimatedSpriteType } from '../../src/types/SpriteTypes'
+import SpritSheetNinjaJSON from '../assets/spritesheet/ninja/spritesheet.json'
+import Slider from '@react-native-community/slider'
 
 const AnimatedExample1 = () => {
-  const animatedRef = useRef<AnimatedSpriteType>(null);
-  const [loop, setLoop] = useState(false);
-  const [fps, setFps] = useState(10);
+  const animatedRef = useRef<AnimatedSpriteType>(null)
+  const [loop, setLoop] = useState(false)
+  const [fps, setFps] = useState(10)
 
   return (
     <View style={styles.screenContainer}>
@@ -31,26 +31,11 @@ const AnimatedExample1 = () => {
         autoPlay={true}
       />
       <View style={styles.btnContainer}>
-        <Button
-          onPress={() => animatedRef.current?.startAnimation('ATTACK', true)}
-          title="ATTACK"
-        />
-        <Button
-          onPress={() => animatedRef.current?.startAnimation('CLIMB')}
-          title="CLIMB"
-        />
-        <Button
-          onPress={() => animatedRef.current?.startAnimation('DEAD')}
-          title="DEAD"
-        />
-        <Button
-          onPress={() => animatedRef.current?.stopAnimation()}
-          title="Pause"
-        />
-        <Button
-          onPress={() => animatedRef.current?.startAnimation()}
-          title="Restart"
-        />
+        <Button onPress={() => animatedRef.current?.startAnimation('ATTACK')} title="ATTACK" />
+        <Button onPress={() => animatedRef.current?.startAnimation('CLIMB')} title="CLIMB" />
+        <Button onPress={() => animatedRef.current?.startAnimation('DEAD')} title="DEAD" />
+        <Button onPress={() => animatedRef.current?.stopAnimation()} title="Pause" />
+        <Button onPress={() => animatedRef.current?.startAnimation()} title="Restart" />
       </View>
       <View style={styles.settingsContainer}>
         <Text style={styles.labelText}>FPS</Text>
@@ -77,10 +62,10 @@ const AnimatedExample1 = () => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default AnimatedExample1;
+export default AnimatedExample1
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -105,4 +90,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginRight: 12,
   },
-});
+})

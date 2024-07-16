@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
-import AnimatedExample1 from './AnimatedExample1';
-import AnimatedExample2 from './AnimatedExample2';
-import SpriteExample from './SpriteExample';
+import { useState } from 'react'
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native'
+import AnimatedExample1 from './AnimatedExample1'
+import AnimatedExample2 from './AnimatedExample2'
+import SpriteExample from './SpriteExample'
 
 export default function App() {
-  const [active, setActive] = useState('ANIMATED');
+  const [active, setActive] = useState('ANIMATED')
 
   return (
     <SafeAreaView>
@@ -14,15 +14,9 @@ export default function App() {
         <Button onPress={() => setActive('ANIMATED2')} title="Animated2" />
         <Button onPress={() => setActive('SPRITE')} title="Sprite" />
       </View>
-      {active === 'ANIMATED' ? (
-        <AnimatedExample1 />
-      ) : active === 'ANIMATED2' ? (
-        <AnimatedExample2 />
-      ) : (
-        <SpriteExample />
-      )}
+      {active === 'ANIMATED' ? <AnimatedExample1 /> : active === 'ANIMATED2' ? <AnimatedExample2 /> : <SpriteExample />}
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -38,4 +32,4 @@ const styles = StyleSheet.create({
   btnContainer: {
     marginTop: 50,
   },
-});
+})
