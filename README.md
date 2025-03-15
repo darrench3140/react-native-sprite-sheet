@@ -1,12 +1,16 @@
 # react-native-sprite-sheet
 
-An up to date react native sprite sheet
+An up to date react native sprite sheet library
 
 ## Installation
 
 ```sh
 npm install react-native-sprite-sheet
 ```
+
+## Demo
+
+
 
 ## Usage
 
