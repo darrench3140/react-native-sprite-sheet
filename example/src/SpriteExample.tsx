@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { useRef, useState } from 'react'
-import { Sprite } from 'react-native-sprite-sheet'
-import type { SpriteType } from '../../src/types/SpriteTypes'
+import { Sprite } from '@darrench3140/react-native-sprite-sheet'
+import type { SpriteType } from '@darrench3140/react-native-sprite-sheet'
 import Slider from '@react-native-community/slider'
 
 const SpriteExample = () => {
@@ -18,10 +18,8 @@ const SpriteExample = () => {
       <Sprite
         ref={ref}
         source={require('../assets/spritesheet/skeleton/spritesheet.png')}
-        width={300}
-        height={300}
-        spriteSheetWidth={4420}
-        spriteSheetHeight={130}
+        size={{ width: 300, height: 300 }}
+        spriteSheetSize={{ width: 4420, height: 130 }}
         columnRowMapping={[34]}
         defaultFrame={currentFrame}
       />

@@ -1,12 +1,12 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import type { Frame, SpriteProps, SpriteType } from '../types/SpriteTypes'
+import type { Frame, SpriteProps, SpriteType } from '..'
 
 const AnimatedImage = Animated.createAnimatedComponent(Image)
 
 const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
-  const { source, spriteSheetWidth, spriteSheetHeight, width, height, columnRowMapping, frameWidth, frameHeight, frames, defaultFrame } = props
+  const { source, spriteSheetSize, size, offset = { x: 0, y: 1 }, columnRowMapping, frameSize, frames, defaultFrame, styles } = props
 
   const [allFrames, setAllFrames] = useState<Frame[]>(frames ?? [])
 
@@ -35,12 +35,12 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
     const frame = allFrames[currentFrameIndex.value]?.frame
     if (!frame) return {}
 
-    const scaleX = width / frame.w
-    const scaleY = height / frame.h
+    const scaleX = size.width / frame.w
+    const scaleY = size.height / frame.h
 
     return {
-      width: spriteSheetWidth * scaleX,
-      height: spriteSheetHeight * scaleY,
+      width: spriteSheetSize.width * scaleX,
+      height: spriteSheetSize.height * scaleY,
       transform: [{ translateX: -frame.x * scaleX }, { translateY: -frame.y * scaleY }],
     }
   })
@@ -48,8 +48,8 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
   useEffect(() => {
     if (!frames) {
       if (!columnRowMapping || columnRowMapping.length === 0) throw new Error('columnRowMapping is not set.')
-      const w = frameWidth ?? spriteSheetWidth / Math.max(...columnRowMapping)
-      const h = frameHeight ?? spriteSheetHeight / columnRowMapping.length
+      const w = frameSize?.width ?? spriteSheetSize.width / Math.max(...columnRowMapping)
+      const h = frameSize?.height ?? spriteSheetSize.height / columnRowMapping.length
 
       const calcFrames = columnRowMapping.flatMap((noOfColumn, rowIndex) => {
         return Array.from(
@@ -59,8 +59,8 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
               frame: {
                 h: h,
                 w: w,
-                x: colIndex * w,
-                y: rowIndex * h,
+                x: colIndex * w + (offset?.x ?? 0),
+                y: rowIndex * h + (offset?.y ?? 0),
               },
             }) as Frame
         )
@@ -69,10 +69,7 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const containerStyle = StyleSheet.compose(styles.container, {
-    width,
-    height,
-  })
+  const containerStyle = StyleSheet.compose(StyleSheet.compose(defaultStyles.container, size), styles)
 
   return (
     <View style={containerStyle}>
@@ -81,7 +78,7 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
   )
 })
 
-const styles = StyleSheet.create({
+const defaultStyles = StyleSheet.create({
   container: {
     overflow: 'hidden',
   },

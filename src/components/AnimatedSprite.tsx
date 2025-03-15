@@ -1,30 +1,28 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { View, StyleSheet, Image } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat, withSequence, Easing, cancelAnimation } from 'react-native-reanimated'
-import type { AnimatedSpriteType, AnimatedSpriteProps, Frame } from '../types/SpriteTypes'
+import type { AnimatedSpriteProps, AnimatedSpriteType, Frame } from '..'
 
 const AnimatedImage = Animated.createAnimatedComponent(Image)
 
 const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((props, ref) => {
   const {
     source,
-    spriteSheetWidth,
-    spriteSheetHeight,
+    spriteSheetSize,
     fps = 60,
-    width,
-    height,
+    size,
+    offset = { x: 0, y: 1 },
     columnRowMapping,
-    frameWidth,
-    frameHeight,
+    frameSize,
     frames,
     inLoop = false,
     autoPlay = false,
     animations,
     defaultAnimationName,
+    styles,
   } = props
   const [allFrames, setAllFrames] = useState<Frame[]>(frames ?? [])
-
-  const currentAnimationName = useSharedValue(defaultAnimationName)
+  const [currentAnimationName, setCurrentAnimationName] = useState(defaultAnimationName)
   const frameIndex = useSharedValue<number>(0)
 
   const toggleAnimation = useCallback(
@@ -33,7 +31,8 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
         console.warn(`Invalid animation name: ${animationName}`)
         return
       }
-      currentAnimationName.value = animationName
+      frameIndex.value = 0 // quick frame reset
+      setCurrentAnimationName(animationName)
       const selectedFramesIndices = animations[animationName]
 
       const animationsSequence = selectedFramesIndices.map((_, index) =>
@@ -46,46 +45,46 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
       const numberOfReps = loop ? -1 : 1
       frameIndex.value = withRepeat(withSequence(...animationsSequence), numberOfReps, false)
     },
-    [animations, currentAnimationName, frameIndex]
+    [animations, frameIndex]
   )
 
   useImperativeHandle(
     ref,
     () => ({
-      startAnimation: (animationName = currentAnimationName.value, loop = inLoop, customFps = fps) => {
+      startAnimation: (animationName = currentAnimationName, loop = inLoop, customFps = fps) => {
         toggleAnimation(animationName, loop, customFps)
       },
       stopAnimation: () => {
         cancelAnimation(frameIndex)
       },
-      getCurrentAnimationName: () => currentAnimationName.value,
+      getCurrentAnimationName: () => currentAnimationName,
     }),
-    [toggleAnimation, inLoop, fps, frameIndex, currentAnimationName.value]
+    [toggleAnimation, inLoop, fps, frameIndex, currentAnimationName]
   )
 
   const animatedStyle = useAnimatedStyle(() => {
-    const selectedFrames = animations[currentAnimationName.value]?.map((index) => allFrames[index]) ?? []
+    const selectedFrames = animations[currentAnimationName]?.map((index) => allFrames[index]) ?? []
     const index = Math.floor(frameIndex.value ?? 0)
     const frame = selectedFrames[index]?.frame
     if (!frame) return {}
     // Calculate the scale factors
-    const scaleX = width / frame.w
-    const scaleY = height / frame.h
+    const scaleX = size.width / frame.w
+    const scaleY = size.height / frame.h
 
     return {
-      width: spriteSheetWidth * scaleX, // The scaled sprite sheet width
-      height: spriteSheetHeight * scaleY, // The scaled sprite sheet height
+      width: spriteSheetSize.width * scaleX, // The scaled sprite sheet width
+      height: spriteSheetSize.height * scaleY, // The scaled sprite sheet height
       transform: [
         // Translate to the position of the frame
-        { translateX: -frame.x * scaleX },
-        { translateY: -frame.y * scaleY },
+        { translateX: -(frame.x + (offset?.x ?? 0)) * scaleX },
+        { translateY: -(frame.y + (offset?.y ?? 0)) * scaleY },
       ],
     }
   })
 
   useEffect(() => {
     if (autoPlay) {
-      toggleAnimation(currentAnimationName.value, inLoop, fps)
+      toggleAnimation(currentAnimationName, inLoop, fps)
     }
   }, [toggleAnimation, autoPlay, currentAnimationName, inLoop, fps, ref])
 
@@ -93,8 +92,8 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
     // if prop 'frames' is undefined, calculate frames manually
     if (!frames) {
       if (!columnRowMapping || columnRowMapping.length === 0) throw new Error('columnRowMapping is not set.')
-      const w = frameWidth ?? spriteSheetWidth / Math.max(...columnRowMapping)
-      const h = frameHeight ?? spriteSheetHeight / columnRowMapping.length
+      const w = frameSize?.width ?? spriteSheetSize.width / Math.max(...columnRowMapping)
+      const h = frameSize?.height ?? spriteSheetSize.height / columnRowMapping.length
       const calcFrames = columnRowMapping.flatMap((noOfColumn, rowIndex) => {
         return Array.from(
           { length: noOfColumn },
@@ -113,10 +112,7 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const containerStyle = StyleSheet.compose(styles.container, {
-    width,
-    height,
-  })
+  const containerStyle = StyleSheet.compose(StyleSheet.compose(defaultStyles.container, size), styles)
 
   return (
     <View style={containerStyle}>
@@ -125,7 +121,7 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
   )
 })
 
-const styles = StyleSheet.create({
+const defaultStyles = StyleSheet.create({
   container: {
     overflow: 'hidden',
   },
