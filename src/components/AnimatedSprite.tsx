@@ -16,7 +16,7 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
     frameSize,
     frames,
     inLoop = false,
-    autoPlay = false,
+    autoPlay = true,
     animations,
     defaultAnimationName,
     styles,

@@ -1,7 +1,6 @@
-import { Button, StyleSheet, Switch, Text, View } from 'react-native'
+import { Button, Image, StyleSheet, Switch, Text, View } from 'react-native'
 import { useRef, useState } from 'react'
-import { AnimatedSprite, getFrames } from '@darrench3140/react-native-sprite-sheet'
-import type { AnimatedSpriteType } from '@darrench3140/react-native-sprite-sheet'
+import { AnimatedSprite, getFrames, type AnimatedSpriteType } from '@darrench3140/react-native-sprite-sheet'
 import SpritSheetNinjaJSON from '../assets/spritesheet/ninja/spritesheet.json'
 import Slider from '@react-native-community/slider'
 
@@ -65,6 +64,8 @@ const AnimatedExample1 = () => {
           value={loop}
         />
       </View>
+      <Text style={styles.imageLabel}>Spritesheet: </Text>
+      <Image source={require('../assets/spritesheet/ninja/spritesheet.png')} style={styles.image} resizeMode="contain" />
     </View>
   )
 }
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 40,
   },
   btnContainer: {
     marginTop: 50,
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
   settingsContainer: {
     justifyContent: 'flex-start',
     width: '100%',
-    marginLeft: 80,
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -93,5 +94,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     marginRight: 12,
+  },
+  imageLabel: {
+    width: '100%',
+    marginTop: 20,
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  image: {
+    width: '100%',
+    height: 50,
   },
 })

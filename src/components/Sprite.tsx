@@ -41,7 +41,7 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
     return {
       width: spriteSheetSize.width * scaleX,
       height: spriteSheetSize.height * scaleY,
-      transform: [{ translateX: -frame.x * scaleX }, { translateY: -frame.y * scaleY }],
+      transform: [{ translateX: -(frame.x + (offset?.x ?? 0)) * scaleX }, { translateY: -(frame.y + (offset?.y ?? 0)) * scaleY }],
     }
   })
 
@@ -59,8 +59,8 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
               frame: {
                 h: h,
                 w: w,
-                x: colIndex * w + (offset?.x ?? 0),
-                y: rowIndex * h + (offset?.y ?? 0),
+                x: colIndex * w,
+                y: rowIndex * h,
               },
             }) as Frame
         )
