@@ -56,8 +56,7 @@ Size of each frame: `128 x 128`
 ### Component:
 
 ```ts
-import { AnimatedSprite, getFrames } from '@darrench3140/react-native-sprite-sheet'
-import type { AnimatedSpriteType } from '@darrench3140/react-native-sprite-sheet'
+import { AnimatedSprite, getFrames, type AnimatedSpriteType } from '@darrench3140/react-native-sprite-sheet'
 
 const Component = () => {
     const animatedRef = useRef<AnimatedSpriteType>(null)

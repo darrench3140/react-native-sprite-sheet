@@ -1,6 +1,6 @@
 {
   "name": "@darrench3140/react-native-sprite-sheet",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "An up to date react native sprite sheet for use in animations.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
