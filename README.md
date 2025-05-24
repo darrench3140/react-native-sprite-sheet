@@ -40,18 +40,16 @@ Size of each frame: `128 x 128`
 
 #### Animations:
 
-- idle: `Frames 0 to 8`
-- walk: `Frames 9 to 16`
-- run: `Frames 17 to 24`
-- attack1: `Frames 25 to 29`
-- attack2: `Frames 30 to 34`
-- attack3: `Frames 35 to 40`
-- shot: `Frames 41 to 54`
-- jump: `Frames 55 to 63`
-- hurt: `Frames 64 to 66`
-- dead: `Frames 67 to 71`
-
-<hr>
+- idle: `Frames 0 to 8` (9 frames)
+- walk: `Frames 9 to 16` (8 frames)
+- run: `Frames 17 to 24` (8 frames)
+- attack1: `Frames 25 to 29` (5 frames)
+- attack2: `Frames 30 to 34` (5 frames)
+- attack3: `Frames 35 to 40` (6 frames)
+- shot: `Frames 41 to 54` (14 frames)
+- jump: `Frames 55 to 63` (9 frames)
+- hurt: `Frames 64 to 66` (3 frames)
+- dead: `Frames 67 to 71` (5 frames)
 
 ### Component:
 
@@ -69,7 +67,6 @@ const Component = () => {
             source={require('../assets/spritesheet/samurai/Samurai_Archer_Spritelist.psd')}
             spriteSheetSize={{ width: 2816, height: 1280 }}
             size={{ width: 200, height: 200 }}
-            offset={offset}
             columnRowMapping={[9, 8, 8, 5, 5, 6, 14, 9, 3, 5]}
             frameSize={{ width: 128, height: 128 }}
             defaultAnimationName="idle"
