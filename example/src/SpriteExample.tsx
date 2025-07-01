@@ -30,15 +30,15 @@ const SpriteExample = () => {
           minimumValue={0}
           maximumValue={49}
           step={1}
-          minimumTrackTintColor="lightblue"
-          maximumTrackTintColor="lightblue"
+          minimumTrackTintColor='lightblue'
+          maximumTrackTintColor='lightblue'
           value={currentFrame}
           onValueChange={setFrame}
         />
         <Text style={styles.labelText}> {currentFrame}</Text>
       </View>
       <Text style={styles.imageLabel}>Spritesheet: </Text>
-      <Image source={require('../assets/spritesheet/elf-skill/elf-skill-sprite.png')} style={styles.image} resizeMode="contain" />
+      <Image source={require('../assets/spritesheet/elf-skill/elf-skill-sprite.png')} style={styles.image} resizeMode='contain' />
     </View>
   )
 }

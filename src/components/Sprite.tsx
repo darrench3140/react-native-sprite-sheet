@@ -1,9 +1,10 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { Platform, StyleSheet, View, Image } from 'react-native'
+import { Image as ExpoImage } from 'expo-image'
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import type { Frame, SpriteProps, SpriteType } from '..'
 
-const AnimatedImage = Animated.createAnimatedComponent(Image)
+const AnimatedImage = Platform.OS === 'android' ? Animated.createAnimatedComponent(ExpoImage) : Animated.createAnimatedComponent(Image)
 
 const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
   const { source, spriteSheetSize, size, offset = { x: 0, y: 1 }, columnRowMapping, frameSize, frames, defaultFrame, styles } = props
@@ -73,7 +74,7 @@ const Sprite = forwardRef<SpriteType, SpriteProps>((props, ref) => {
 
   return (
     <View style={containerStyle}>
-      <AnimatedImage source={source} style={animatedStyle} resizeMode="contain" />
+      <AnimatedImage source={source} style={animatedStyle} contentFit='contain' resizeMode={'contain'} />
     </View>
   )
 })

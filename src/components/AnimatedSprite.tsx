@@ -1,9 +1,10 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Platform, Image } from 'react-native'
+import { Image as ExpoImage } from 'expo-image'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat, withSequence, Easing, cancelAnimation } from 'react-native-reanimated'
 import type { AnimatedSpriteProps, AnimatedSpriteType, Frame } from '..'
 
-const AnimatedImage = Animated.createAnimatedComponent(Image)
+const AnimatedImage = Platform.OS === 'android' ? Animated.createAnimatedComponent(ExpoImage) : Animated.createAnimatedComponent(Image)
 
 const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((props, ref) => {
   const {
@@ -63,7 +64,7 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
   )
 
   const animatedStyle = useAnimatedStyle(() => {
-    const selectedFrames = animations[currentAnimationName]?.map((index) => allFrames[index]) ?? []
+    const selectedFrames = animations[currentAnimationName]?.map(index => allFrames[index]) ?? []
     const index = Math.floor(frameIndex.value ?? 0)
     const frame = selectedFrames[index]?.frame
     if (!frame) return {}
@@ -116,7 +117,7 @@ const AnimatedSprite = forwardRef<AnimatedSpriteType, AnimatedSpriteProps>((prop
 
   return (
     <View style={containerStyle}>
-      <AnimatedImage source={source} style={animatedStyle} resizeMode={'contain'} />
+      <AnimatedImage source={source} style={animatedStyle} contentFit={'contain'} resizeMode={'contain'} />
     </View>
   )
 })

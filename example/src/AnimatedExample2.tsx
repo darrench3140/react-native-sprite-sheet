@@ -1,4 +1,5 @@
-import { Button, Image, StyleSheet, Switch, Text, View } from 'react-native'
+import Button from './Button'
+import { Image, StyleSheet, Switch, Text, View } from 'react-native'
 import { useRef, useState } from 'react'
 import { AnimatedSprite, getFrames, type AnimatedSpriteType } from '@darrench3140/react-native-sprite-sheet'
 import SpritSheetNinjaJSON from '../assets/spritesheet/ninja/spritesheet.json'
@@ -23,7 +24,7 @@ const AnimatedExample1 = () => {
         spriteSheetSize={{ width: 14690, height: 601 }}
         size={{ width: 200, height: 300 }}
         frames={SpritSheetNinjaJSON.frames}
-        defaultAnimationName="ATTACK"
+        defaultAnimationName='ATTACK'
         animations={{
           ATTACK: getFrames(0, 9),
           CLIMB: getFrames(10, 19),
@@ -34,11 +35,11 @@ const AnimatedExample1 = () => {
         autoPlay={true}
       />
       <View style={styles.btnContainer}>
-        <Button onPress={() => playAnimation('ATTACK', true, 20)} title="ATTACK" />
-        <Button onPress={() => playAnimation('CLIMB', true, 10)} title="CLIMB" />
-        <Button onPress={() => playAnimation('DEAD', false)} title="DEAD" />
-        <Button onPress={() => animatedRef.current?.stopAnimation()} title="Pause" />
-        <Button onPress={() => animatedRef.current?.startAnimation()} title="Restart" />
+        <Button onPress={() => playAnimation('ATTACK', true, 20)} title='ATTACK' />
+        <Button onPress={() => playAnimation('CLIMB', true, 10)} title='CLIMB' />
+        <Button onPress={() => playAnimation('DEAD', false)} title='DEAD' />
+        <Button onPress={() => animatedRef.current?.stopAnimation()} title='Pause' />
+        <Button onPress={() => animatedRef.current?.startAnimation()} title='Restart' />
       </View>
       <View style={styles.settingsContainer}>
         <Text style={styles.labelText}>FPS</Text>
@@ -47,10 +48,10 @@ const AnimatedExample1 = () => {
           minimumValue={0}
           maximumValue={60}
           step={5}
-          minimumTrackTintColor="lightblue"
-          maximumTrackTintColor="lightblue"
+          minimumTrackTintColor='lightblue'
+          maximumTrackTintColor='lightblue'
           value={fps}
-          onValueChange={(value) => setFps(value)}
+          onValueChange={value => setFps(value)}
         />
         <Text style={styles.labelText}> {fps}</Text>
       </View>
@@ -59,13 +60,13 @@ const AnimatedExample1 = () => {
         <Switch
           trackColor={{ false: '#767577', true: '#81b0ff' }}
           thumbColor={'#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={() => setLoop((prev) => !prev)}
+          ios_backgroundColor='#3e3e3e'
+          onValueChange={() => setLoop(prev => !prev)}
           value={loop}
         />
       </View>
       <Text style={styles.imageLabel}>Spritesheet: </Text>
-      <Image source={require('../assets/spritesheet/ninja/spritesheet.png')} style={styles.image} resizeMode="contain" />
+      <Image source={require('../assets/spritesheet/ninja/spritesheet.png')} style={styles.image} resizeMode='contain' />
     </View>
   )
 }
